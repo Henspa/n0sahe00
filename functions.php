@@ -27,7 +27,7 @@ function checkUser(PDO $dbcon, $userName, $password){
         return false;
 
     }catch(PDOException $e){
-        echo print 401;
+        echo '<br>'.$e->getMessage();
     }
 }
 
