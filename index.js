@@ -1,6 +1,7 @@
 var form = document.querySelector("form");
 var loginResult = document.querySelector("p")
 var loginUrl = 'http://localhost/n0sahe00/login.php'
+var token;
 
 form.addEventListener("submit", login)
 
@@ -25,7 +26,10 @@ function login(e){
 
     fetch(loginUrl, params)
         .then(resp => resp.json())
-        .then( data => loginResult.textContent = data.info)
+        .then( data => {
+            loginResult.textContent = data.info
+            token = data.token
+        })
         .catch(e => {
             loginResult.textContent = "Epäonnistui!!!!"
         })

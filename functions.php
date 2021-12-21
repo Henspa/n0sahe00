@@ -52,17 +52,42 @@ function createUser(PDO $dbcon, $firstName, $lastName, $userName, $password){
     }
 }
 
+
 /**
  * Luo ja palauttaa tietokantayhteyden.
  */
 function openDb(){
 
     try{
-        $dbcon = new PDO('mysql:host=localhost;dbname=n0sahe00', 'root', '');
+        $dbcon = new PDO('mysql:host=localhost;dbname=n0sahe00', 'root', 'root');
         $dbcon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }catch(PDOException $e) {
         echo '<br>'.$e->getMessage();
     }
     return $dbcon;
+}
+
+/** Taulun luonti tietokantaan */
+function createTable (PDO $con) {
+    $sql= "CREATE TABLE IF NOT EXISTS user (
+        firstName varchar(50) NOT NULL,
+        lastName varchar(50) NOT NULL,
+        userName varchar(50) NOT NULL,
+        password varchar(150) NOT NULL,
+        PRIMARY KEY (userName)
+    )";
+    
+    try{
+        $con->exec($sql);
+    } catch(PDOException $e){
+        echo '<br>'.$e->getMessage();
+    }
+
+    //Luodaan pari käyttäjää
+    createUser($con, 'John', 'Doe', 'doejohn', 'dojo'); 
+    createUser($con, 'Jane', 'Doe', 'doejane', 'doja');
+    createUser($con, 'Lisa', 'Simpson', 'simplisa', 'sili');
+    
+
 }
 ?>
